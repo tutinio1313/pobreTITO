@@ -27,12 +27,15 @@ public class UserController : Controller
             response.StateExecution = true;
             response.Messages.Add("Se ha creado la cuenta.");
 
-            User user = new User();
+            User user = new User
+            {
+                ID = register.id,
+                Name = register.name,
+                Lastname = register.lastname,
+                Email = register.email,
+            };
 
-            user.ID = register.id;
-            user.Name = register.name;
-            user.Lastname = register.lastname;
-            user.Email = register.email;
+            
         }
 
         else
