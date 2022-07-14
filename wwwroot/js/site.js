@@ -1,4 +1,21 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿/*jslint browser */
+"use strict";
+// eslint-disable-next-line
+function canPost()
+{
+  var inputs = document.getElementsByTagName('input');
+  var state = true;
 
-// Write your JavaScript code.
+  for (let index = 0; index < inputs.length; index++) {
+    if(inputs[index].value == "")
+    {
+      state = false;
+    }    
+  }
+
+  if(state)
+  {
+    var button = document.getElementById('submitRegister');
+    button.removeAttribute('disabled');    
+  }
+}

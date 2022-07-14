@@ -1,37 +1,48 @@
-@model pobreTITO_models.RegisterViewModel
+@model pobreTITO_Models.RegisterViewModel
 @{
     ViewData["Title"] = "Registro";
 }
 
-<h2 style="text-align: center;">@ViewData["Title"]</h2>
-<hr>
 
-<form class="form" id="RegisterForm" asp-action="Register" asp-controller = "User" method="post">
-    <div class="column" id="columnA">
-        <label for="email">Email</label>
-        <input class="registerInput" asp-for="email" name="email" type="email">
+<div class="containerRegister">
+    <h2 style="text-align: center;">@ViewData["Title"]</h2>
+    <hr>
 
-        <label for="emailConfimation">Confirmar Email</label>
-        <input class="registerInput" asp-for="emailConfimation" name="emailConfirmation" type="email">
+    <form class="form" id="RegisterForm" asp-action="Create" method="post">
+        <div asp-validation-summary="All"></div>
+        <div class="column" id="columnA">
+            <label asp-for="email">Email</label>
+            <input class="registerInput" asp-for="email" id="email" data-val="true" data-val-required="Por favor ingrese su Email." onchange="canPost()" type="email" >
 
-        <label for="name">Nombre</label>
-        <input class="registerInput" asp-for="name" name="name" type="text">
-    </div>
+            <label asp-for="emailConfimation">Confirmar Email</label>
+            <input class="registerInput" asp-for="emailConfimation" data-val="true" data-val-required="Por favor reingrese su Email." onchange="canPost()" id="emailConfirmation" type="email" >
 
-    <div class="column" id="columnB">
-        <label for="lastname">Apellido</label>
-        <input class="registerInput" asp-for="lastname" name="lastname" type="text">
+            <label asp-for="name">Nombre</label>
+            <input class="registerInput" asp-for="name" data-val="true" data-val-required="Por favor ingrese su nombre." id="name" onchange="canPost()" type="text" >
+        </div>
 
-        <label for="password">Contraseña</label>
-        <input class="registerInput" asp-for="password" name="password" type="password">
+        <div class="column" id="columnB">
+            <label asp-for="lastname">Apellido</label>
+            <input class="registerInput" asp-for="lastname" id="lastname" data-val="true" data-val-required="Por favor reingrese su apellido." onchange="canPost()" type="text" >
 
-        <label for="passwordConfirmation">Confirmar contraseña</label>
-        <input class="registerInput" asp-for="passwordConfirmation" name="passwordConfirmation" type="password">
-    </div>
+            <label asp-for="password">Contraseña</label>
+            <input class="registerInput" asp-for="password" data-val="true" data-val-required="Por favor reingrese la contraseña." id="password" onchange="canPost()" type="password" >
 
-    <div class="column" id="columnC">
-        <label for="id">DNI</label>
-        <input class="registerInput" asp-for="id" name="id" type="text">
-    </div>
-</form>
-<input id="submitRegister" type="submit">
+            <label asp-for="passwordConfirmation">Confirmar contraseña</label>
+            <input class="registerInput" asp-for="passwordConfirmation" data-val="true" data-val-required="Por favor reingrese su contraseña." onchange="canPost()" id="passwordConfirmation" type="password" >
+        </div>
+
+        <div class="column" id="columnC">
+            <label asp-for="id">DNI</label>
+            <input class="registerInput" asp-for="id" name="id" onchange="canPost()" type="text">
+        </div>
+
+        <button id="submitRegister" type="submit" disabled>Registrarse</button>
+    </form>
+
+</div>
+
+
+<div id="StateMessages">
+
+</div>

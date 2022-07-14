@@ -1,5 +1,5 @@
 #pragma warning disable CS8618
-namespace pobreTITO_models
+namespace pobreTITO_Models
 {
     public class User
     {
@@ -8,5 +8,5 @@ namespace pobreTITO_models
         public string Name { get; set; }
         public string Lastname { get; set; }
         public string Password { get; set; }
-    }    
+    }
 }

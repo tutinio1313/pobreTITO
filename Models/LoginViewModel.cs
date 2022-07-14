@@ -1,18 +1,18 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
- #pragma warning disable CS8618
+#pragma warning disable CS8618
 
-namespace pobreTITO_models
+namespace pobreTITO_Models
 {
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Oops, debes ingresar el email.")]
         [DataType(DataType.EmailAddress)]
-        public string email {get; set;}
+        public string email { get; set; }
 
         [Required(ErrorMessage = "Oops, debes ingresar la contraseña.")]
         [DataType(DataType.Password)]
-        public string password {get; set;}
-    }    
+        public string password { get; set; }
+    }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using pobreTITO_models;
+using pobreTITO_Models;
 #pragma warning disable CS8618
 #pragma warning disable CS8601
 #pragma warning disable CS8602
@@ -29,17 +29,6 @@ namespace pobreTITO
             return users;
         }
 
-        public static bool ExistsUser(string ID)
-        {
-            if (!ID.Contains("@"))
-            {
-                return users.Exists(x => x.ID == ID);
-            }
-            else
-            {
-                return users.Exists(x => x.Email == ID);
-            }
-        }
         private static void CreateLists()
         {
 
@@ -50,16 +39,7 @@ namespace pobreTITO
                 string jsonUser = System.IO.File.ReadAllText(userJsonPath);
 
                 users = JsonConvert.DeserializeObject<List<User>>(jsonUser);
-
-                users.Sort(delegate (User UserA, User UserB)
-                {
-                    if (UserA.ID == null && UserB.ID == null) return 0;
-                    else if (UserA.ID == null) return -1;
-                    else if (UserB.ID == null) return 1;
-                    else return UserA.ID.CompareTo(UserB.ID);
-                }
-                );
-
+               
                 if (users == null)
                 {
                     users = new List<User>();

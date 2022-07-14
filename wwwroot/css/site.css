@@ -3,6 +3,14 @@ html {
   font-family: Calibri;
 }
 
+body {
+  background-color: lightgray;
+}
+
+footer {
+  background-color: white;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -18,8 +26,7 @@ body {
   margin-bottom: 60px;
 }
 
-.userAccess
-{
+.userAccess {
   border: 3px solid;
   border-radius: 5px;
   border-color: #add8e6;
@@ -28,71 +35,90 @@ body {
   transition: all 500ms;
 }
 
-.userAccess:hover
-{
+.userAccess:hover {
   animation: 500ms linear forwards userAccessHover;
 }
 
-@keyframes userAccessHover{
-  100%
-  {
+@keyframes userAccessHover {
+  100% {
     border-color: #70a6b8;
     background-color: #70a6b8;
     color: white;
-  }  
+  }
 }
 
 /*Register and Login CSS*/
 
-form,.column
-{
-  display: grid;
-  text-align: center;
+.containerRegister {
+  background-color: white;
+  border: 3px solid white;
+  box-shadow: 3px 3px 5px #afb7b9;
+  border-radius: 10px;
+  width: 43%;
+  position: relative;
+  left: 27%;
 }
 
-#RegisterForm
+form,
+.column {
+  display: grid;
+  text-align: center;
+  
+  
+}
+.column
 {
-  grid-template-areas: 
-  "columnA columnB"
-  "columnA columnB"
-  "columnC columnC"
+  place-content: center;
+}
+
+#RegisterForm {
+  padding: 1% 0 3% 0;
+  grid-template-areas:
+    "columnA columnB"
+    "columnA columnB"
+    "columnC columnC"
   ;
 }
 
-#columnA
-{
+#columnA {
   grid-area: columnA;
   margin: 2%;
 }
 
-#columnB
-{
+#columnB {
   margin: 2%;
   grid-area: columnB;
 }
 
-#columnC
-{
+#columnC {
   grid-area: columnC;
   margin: 2%;
 }
 
-.registerInput
-{
-  border: 3px solid #70a6b8;
-  border-radius: 10px;
+hr {
+  width: 20%;
+  position: relative;
+  left: 40%;
 }
 
- #submitRegister
-{
+
+
+.registerInput {
+  border: 3px solid #848484;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#submitRegister {
   position: relative;
-  left: 45.6%;
+  left: -15%;
   max-width: 30%;
-  background-color: #add8e6;
-  border: 5px solid #add8e6;
+  min-width: 100px;
+  background-color: white;
+  border: 5px solid #afb7b9;
   border-radius: 4px;
 }
-#submitRegister:hover
-{
+
+#submitRegister:hover {
   animation: 500ms linear forwards userAccessHover;
 }

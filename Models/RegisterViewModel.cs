@@ -2,13 +2,13 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 #pragma warning disable CS8618
-namespace pobreTITO_models
+namespace pobreTITO_Models
 {
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Oops, debes ingresar el DNI.")]
         [DataType(DataType.Text)]
-            [RegularExpression("^[0-9]+$")]
+        [RegularExpression("^[0-9]+$")]
         public string id { get; set; }
 
         [Required(ErrorMessage = "Oops, debes ingresar el email.")]
