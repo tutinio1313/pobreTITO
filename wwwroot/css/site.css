@@ -1,5 +1,6 @@
 html {
   font-size: 14px;
+  font-family: Calibri;
 }
 
 @media (min-width: 768px) {
@@ -15,4 +16,83 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.userAccess
+{
+  border: 3px solid;
+  border-radius: 5px;
+  border-color: #add8e6;
+  background-color: #add8e6;
+  color: white;
+  transition: all 500ms;
+}
+
+.userAccess:hover
+{
+  animation: 500ms linear forwards userAccessHover;
+}
+
+@keyframes userAccessHover{
+  100%
+  {
+    border-color: #70a6b8;
+    background-color: #70a6b8;
+    color: white;
+  }  
+}
+
+/*Register and Login CSS*/
+
+form,.column
+{
+  display: grid;
+  text-align: center;
+}
+
+#RegisterForm
+{
+  grid-template-areas: 
+  "columnA columnB"
+  "columnA columnB"
+  "columnC columnC"
+  ;
+}
+
+#columnA
+{
+  grid-area: columnA;
+  margin: 2%;
+}
+
+#columnB
+{
+  margin: 2%;
+  grid-area: columnB;
+}
+
+#columnC
+{
+  grid-area: columnC;
+  margin: 2%;
+}
+
+.registerInput
+{
+  border: 3px solid #70a6b8;
+  border-radius: 10px;
+}
+
+ #submitRegister
+{
+  position: relative;
+  left: 45.6%;
+  max-width: 30%;
+  background-color: #add8e6;
+  border: 5px solid #add8e6;
+  border-radius: 4px;
+}
+#submitRegister:hover
+{
+  animation: 500ms linear forwards userAccessHover;
 }

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using pobreTITO.Models;
+using pobreTITO_models;
 
 namespace pobreTITO.Controllers;
 
@@ -18,7 +18,12 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public ViewResult Login()
+    {
+        return View();
+    }
+
+    public ViewResult Register()
     {
         return View();
     }
