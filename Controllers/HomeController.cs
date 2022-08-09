@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using pobreTITO_Models;
 using pobreTITO_Services;
@@ -13,6 +15,15 @@ public class HomeController : Controller
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
+    }
+
+    private UserManager<IdentityUser> userManager;
+    private SignInManager<IdentityUser> signInManager;
+
+    public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+    {
+        this.userManager = userManager;
+        this.signInManager = signInManager;
     }
 
     public IActionResult Index()
@@ -31,37 +42,15 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public ViewResult Create(RegisterViewModel register)
+    public async Task<ViewResult> Create(RegisterViewModel register)
     {
-        Response response = new Response();
+      
+         var response = await UserService.Register(register, userManager);
 
-        if (ModelState.IsValid)
-        {
-            if (!HaveObjectNulls(register))
-            {
-                response = UserService.Register(register);
-            }
-        }
-        else
-        {
-            response.StateExecution = false;
-            response.Messages = new List<string>();
-            response.Messages.Add("Revisa los valores ingresados porque tienes nulos.");
-        }
         return View();
     }
 
-    private bool HaveObjectNulls(RegisterViewModel register)
-    {
-        if (register.id == null || register.name == null || register.lastname == null || register.email == null || register.emailConfimation == null || register.password == null || register.passwordConfirmation == null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+   
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using pobreTITO_response;
 using pobreTITO_Models;
@@ -8,57 +10,69 @@ namespace pobreTITO_Services
 {
     public static class UserService
     {
-
-        public static Response Register(RegisterViewModel register)
+        public async static Task<Response> Register(RegisterViewModel register, UserManager<IdentityUser> userManager)
         {
-            List<User> users = Listas.GetUsers();
 
             Response response = new Response();
             response.Messages = new List<string>();
 
-            bool existsUserID = users.Exists(x => x.ID == register.id);
-            bool existsUserEmail = users.Exists(x => x.Email ==register.email);
+            bool existsUserEmail;
+
+            if (userManager.FindByEmailAsync(register.email) != null)
+            {
+                existsUserEmail = true;
+            }
+            else
+            {
+                existsUserEmail = false;
+            }
+            bool modelContainsNulls = HaveObjectNulls(register);
             bool areEmailEquals = register.email.Equals(register.emailConfimation);
             bool arePasswordsEquals = register.email.Equals(register.emailConfimation);
 
 
-            if (!existsUserID && !existsUserEmail && !areEmailEquals && !arePasswordsEquals) 
+            if (!existsUserEmail && !areEmailEquals && !arePasswordsEquals && !modelContainsNulls)
             {
                 response.StateExecution = true;
 
                 User user = new User
                 {
-                    ID = register.id,
+                    DNI = register.id,
                     Name = register.name,
                     Lastname = register.lastname,
                     Email = register.email,
-                    Password = register.password
                 };
 
-                Listas.AddUser(user);
+                await userManager.CreateAsync(user, register.password);
             }
 
             else
             {
                 response.StateExecution = false;
-                if (existsUserID && existsUserEmail)
+
+                if (existsUserEmail)
                 {
-                    response.Messages.Add("El dni ya esta registrado.");
-                    response.Messages.Add("El email ya esta registrado.");
+                    response.Messages.Add("el email ya esta registrado");
                 }
                 else
                 {
-                    if (existsUserEmail)
-                    {
-                        response.Messages.Add("el email ya esta registrado");
-                    }
-                    else
-                    {
-                        response.Messages.Add("El dni ya esta registrado.");
-                    }
+                    response.Messages.Add("El dni ya esta registrado.");
                 }
+
             }
             return response;
+        }
+
+        private static bool HaveObjectNulls(RegisterViewModel register)
+        {
+            if (register.id == null || register.name == null || register.lastname == null || register.email == null || register.emailConfimation == null || register.password == null || register.passwordConfirmation == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

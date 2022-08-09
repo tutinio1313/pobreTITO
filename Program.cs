@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite;
+using pobreTITO_Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<PobretitoDbContext>(opts =>{ opts.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]);});
+builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
 
 var app = builder.Build();
 
@@ -28,4 +35,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "RegisterUser",
     pattern: "{controller=Home}/{action=Create}");
+
+SeedData.EnsurePopulated(app);
+
 app.Run();
