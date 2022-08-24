@@ -17,40 +17,12 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    private UserManager<IdentityUser> userManager;
-    private SignInManager<IdentityUser> signInManager;
-
-    public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
-    {
-        this.userManager = userManager;
-        this.signInManager = signInManager;
-    }
-
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public ViewResult Login()
-    {
-        return View();
-    }
-    [HttpGet]
-    public ViewResult Register()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public async Task<ViewResult> Create(RegisterViewModel register)
-    {
-      
-         var response = await UserService.Register(register, userManager);
-
-        return View();
-    }
-
-   
+    [Route("/Index")]
+    public IActionResult Index() => View();
+    [Route("/Login")]
+    public ViewResult Login() => View();
+    [Route("/Register")]
+    public ViewResult Register() => View();
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

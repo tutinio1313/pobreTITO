@@ -1,9 +1,35 @@
 @model pobreTITO_Models.LoginViewModel
 @{
-    ViewData["Title"] = "Ingreso";
+    ViewData["Title"] = "Iniciar Sesión";
 }
 
-<form class="form" asp-action="">
-    <label></label>
-    <input type="email">
-</form>
+<div class="containerRegister py-4">
+    <form class="form mt-auto needs-validation" asp-action="Login" asp-controller="User">
+        <div asp-validation-summary="All"></div>
+        <h2>@ViewData["Title"]</h2>
+        <hr>
+        <div class="mx-auto col-md-auto">
+            <label asp-for="email" class="form-label" for="email">Ingrese el Email.</label>
+            <div class="input-group has-validation" onchange="canPost()">
+                <input asp-for="email" class="form-control width-50" id="email" type="email" required>
+                <div class="invalid-feedback">
+                    Oops parece que no has ingresado un Email correcto.
+                </div>
+            </div>
+        </div>
+
+        <div class="mx-auto col-md-auto">
+            <label asp-for="password" class="form-label" for="password" >Ingrese la
+                contraseña.</label>
+            <input class="form-control width-50" asp-for="password" id="password" type="password" onchange="canPost()" required>
+        </div>
+
+        <div class="mx-auto col-md-4 mt-3">
+            <button type="submit" id="submit" class="btn btn-primary btn-block" disabled>Ingresar</button>
+        </div>
+    </form>
+</div>
+
+<div id="StateMessages">
+
+</div>

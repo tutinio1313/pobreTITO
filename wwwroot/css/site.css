@@ -26,27 +26,6 @@ body {
   margin-bottom: 60px;
 }
 
-.userAccess {
-  border: 3px solid;
-  border-radius: 5px;
-  border-color: #add8e6;
-  background-color: #add8e6;
-  color: white;
-  transition: all 500ms;
-}
-
-.userAccess:hover {
-  animation: 500ms linear forwards userAccessHover;
-}
-
-@keyframes userAccessHover {
-  100% {
-    border-color: #70a6b8;
-    background-color: #70a6b8;
-    color: white;
-  }
-}
-
 /*Register and Login CSS*/
 
 .containerRegister {
@@ -62,9 +41,7 @@ body {
 form,
 .column {
   display: grid;
-  text-align: center;
-  
-  
+  text-align: center; 
 }
 .column
 {
@@ -77,6 +54,7 @@ form,
     "columnA columnB"
     "columnA columnB"
     "columnC columnC"
+    "submitContainer submitContainer"
   ;
 }
 
@@ -95,30 +73,19 @@ form,
   margin: 2%;
 }
 
+#submitContainer
+{
+  grid-area: submitContainer;
+}
+
 hr {
   width: 20%;
   position: relative;
   left: 40%;
 }
 
-
-
 .registerInput {
   border: 3px solid #848484;
   border-radius: 10px;
   text-align: center;
-}
-
-#submitRegister {
-  position: relative;
-  left: -15%;
-  max-width: 30%;
-  min-width: 100px;
-  background-color: white;
-  border: 5px solid #afb7b9;
-  border-radius: 4px;
-}
-
-#submitRegister:hover {
-  animation: 500ms linear forwards userAccessHover;
 }

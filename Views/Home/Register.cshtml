@@ -12,24 +12,33 @@
         <div asp-validation-summary="All"></div>
         <div class="column" id="columnA">
             <label asp-for="email">Email</label>
-            <input class="registerInput" asp-for="email" id="email" data-val="true" data-val-required="Por favor ingrese su Email." onchange="canPost()" type="email" >
+            <input class="registerInput" asp-for="email" id="email" data-val="true"
+                data-val-required="Por favor ingrese su Email." onchange="canPost()" type="email">
 
             <label asp-for="emailConfimation">Confirmar Email</label>
-            <input class="registerInput" asp-for="emailConfimation" data-val="true" data-val-required="Por favor reingrese su Email." onchange="canPost()" id="emailConfirmation" type="email" >
+            <input class="registerInput" asp-for="emailConfimation" data-val="true"
+                data-val-required="Por favor reingrese su Email." onchange="canPost()" id="emailConfirmation"
+                type="email">
 
             <label asp-for="name">Nombre</label>
-            <input class="registerInput" asp-for="name" data-val="true" data-val-required="Por favor ingrese su nombre." id="name" onchange="canPost()" type="text" >
+            <input class="registerInput" asp-for="name" data-val="true" data-val-required="Por favor ingrese su nombre."
+                id="name" onchange="canPost()" type="text">
         </div>
 
         <div class="column" id="columnB">
             <label asp-for="lastname">Apellido</label>
-            <input class="registerInput" asp-for="lastname" id="lastname" data-val="true" data-val-required="Por favor reingrese su apellido." onchange="canPost()" type="text" >
+            <input class="registerInput" asp-for="lastname" id="lastname" data-val="true"
+                data-val-required="Por favor reingrese su apellido." onchange="canPost()" type="text">
 
             <label asp-for="password">Contraseña</label>
-            <input class="registerInput" asp-for="password" data-val="true" data-val-required="Por favor reingrese la contraseña." id="password" onchange="canPost()" type="password" >
+            <input class="registerInput" asp-for="password" data-val="true"
+                data-val-required="Por favor reingrese la contraseña." id="password" onchange="canPost()"
+                type="password">
 
             <label asp-for="passwordConfirmation">Confirmar contraseña</label>
-            <input class="registerInput" asp-for="passwordConfirmation" data-val="true" data-val-required="Por favor reingrese su contraseña." onchange="canPost()" id="passwordConfirmation" type="password" >
+            <input class="registerInput" asp-for="passwordConfirmation" data-val="true"
+                data-val-required="Por favor reingrese su contraseña." onchange="canPost()" id="passwordConfirmation"
+                type="password">
         </div>
 
         <div class="column" id="columnC">
@@ -37,7 +46,10 @@
             <input class="registerInput" asp-for="id" name="id" onchange="canPost()" type="text">
         </div>
 
-        <button id="submitRegister" type="submit" disabled>Registrarse</button>
+        <div id="submitContainer" class="mx-auto col-md-4 mt-3">
+            <button id="submit" type="submit" class="btn btn-primary btn-block" disabled>Registrarse</button>
+        </div>
+
     </form>
 
 </div>

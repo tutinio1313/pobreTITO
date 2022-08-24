@@ -15,7 +15,7 @@ function canPost()
 
   if(state)
   {
-    var button = document.getElementById('submitRegister');
+    var button = document.getElementById('submit');
     button.removeAttribute('disabled');    
   }
 }

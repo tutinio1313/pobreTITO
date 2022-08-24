@@ -8,7 +8,7 @@ using pobreTITO;
 
 namespace pobreTITO_Services
 {
-    public static class UserService
+    public static class ReportService
     {
         public async static Task<Response> Register(RegisterViewModel register, UserManager<IdentityUser> userManager)
         {
@@ -73,12 +73,7 @@ namespace pobreTITO_Services
             return response;
         }
 
-        public async static /*Task<Response>*/ void Login(LoginViewModel request, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
-        {
-
-        }
-
-        private static bool HaveObjectNulls(RegisterViewModel register)
+            private static bool HaveObjectNulls(RegisterViewModel register)
         {
             if (register.id == null || register.name == null || register.lastname == null || register.email == null || register.emailConfimation == null || register.password == null || register.passwordConfirmation == null)
             {

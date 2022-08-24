@@ -36,6 +36,5 @@ app.MapControllerRoute(
     name: "RegisterUser",
     pattern: "{controller=Home}/{action=Create}");
 
-SeedData.EnsurePopulated(app);
 
 app.Run();
