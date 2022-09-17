@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-
 namespace pobreTITO_Models
 {
     public class PobretitoDbContext : DbContext

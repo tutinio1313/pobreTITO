@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using pobreTITO_Models;
 using pobreTITO_Services;
-using pobreTITO_response;
-
 namespace pobreTITO.Controllers;
 
 public class HomeController : Controller
@@ -16,13 +14,11 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-
-    [Route("/Index")]
-    public IActionResult Index() => View();
+    public async Task<ViewResult> Index() => View();
     [Route("/Login")]
-    public ViewResult Login() => View();
+    public async Task<ViewResult> Login() => View();
     [Route("/Register")]
-    public ViewResult Register() => View();
+    public async Task<ViewResult> Register() => View();
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

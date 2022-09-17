@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using pobreTITO_response;
 using pobreTITO_Models;
-using System.Collections.Generic;
 using pobreTITO;
 
 namespace pobreTITO_Services
@@ -14,8 +12,6 @@ namespace pobreTITO_Services
         {
 
             Response response = new Response();
-            response.Messages = new List<string>();
-
             bool existsUserEmail;
 
             if (userManager.FindByEmailAsync(register.email) != null)
@@ -64,7 +60,7 @@ namespace pobreTITO_Services
             }
 
             else
-            {                
+            {
                 response.StateExecution = false;
                 response.Messages.Add("Oops parece que los datos ingresados no son correctos.");
             }
@@ -73,7 +69,7 @@ namespace pobreTITO_Services
             return response;
         }
 
-            private static bool HaveObjectNulls(RegisterViewModel register)
+        private static bool HaveObjectNulls(RegisterViewModel register)
         {
             if (register.id == null || register.name == null || register.lastname == null || register.email == null || register.emailConfimation == null || register.password == null || register.passwordConfirmation == null)
             {

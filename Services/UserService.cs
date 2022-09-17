@@ -1,16 +1,25 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using pobreTITO_response;
 using pobreTITO_Models;
-using System.Collections.Generic;
 using pobreTITO;
 
 namespace pobreTITO_Services
 {
     public static class UserService
     {
-        public async static Task<Response> Register(RegisterViewModel register, UserManager<IdentityUser> userManager)
+        private static UserManager<IdentityUser> userManager;
+        private static SignInManager<IdentityUser> signInManager;
+
+        public static void SetManagers(IApplicationBuilder app)
+        {
+            PobretitoDbContext context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<PobretitoDbContext>();
+
+            userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            signInManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SignInManager<IdentityUser>>();
+        }
+
+        public async static Task<Response> Register(RegisterViewModel register)
         {
 
             Response response = new Response();
@@ -26,11 +35,10 @@ namespace pobreTITO_Services
             {
                 existsUserEmail = false;
             }
-            bool modelContainsNulls = HaveObjectNulls(register);
             bool areEmailEquals = register.email.Equals(register.emailConfimation);
             bool arePasswordsEquals = register.email.Equals(register.emailConfimation);
 
-            if (modelContainsNulls)
+            if (HaveObjectNulls(register))
             {
                 if (!existsUserEmail && areEmailEquals && arePasswordsEquals)
                 {
@@ -64,7 +72,7 @@ namespace pobreTITO_Services
             }
 
             else
-            {                
+            {
                 response.StateExecution = false;
                 response.Messages.Add("Oops parece que los datos ingresados no son correctos.");
             }
@@ -73,9 +81,41 @@ namespace pobreTITO_Services
             return response;
         }
 
-        public async static /*Task<Response>*/ void Login(LoginViewModel request, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public async static Task<Response> Login(LoginViewModel request)
         {
+            Response response = new Response();
+            try
+            {
+                IdentityUser user = await userManager.FindByEmailAsync(request.email);
 
+
+                if (user != null)
+                {
+                    await signInManager.SignOutAsync();
+                    if ((await signInManager.PasswordSignInAsync(user, request.password, false, false)).Succeeded)
+                    {
+                        response.StateExecution = true;
+                        return response;
+                    }
+                    else
+                    {
+                        response.StateExecution = false;
+                        response.Messages.Add("La constraseña es incorrecta.");
+                    }
+                }
+                else
+                {
+                    response.StateExecution = false;
+                    response.Messages.Add("El email ingresado es incorrecto.");
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+
+
+            return response;
         }
 
         private static bool HaveObjectNulls(RegisterViewModel register)

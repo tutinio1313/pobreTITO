@@ -1,7 +1,7 @@
 using System.Collections.Generic;
  #pragma warning disable CS8618
 
-namespace pobreTITO_response
+namespace pobreTITO_Models_response
 {
     public class Response
     {

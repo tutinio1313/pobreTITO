@@ -1,16 +1,31 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
+using Microsoft.AspNetCore.Identity;
 using pobreTITO_Models;
+using pobreTITO_Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<PobretitoDbContext>(opts =>{ opts.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]);});
-builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
+builder.Services.AddDbContext<PobretitoDbContext>(options => options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+builder.Services.AddScoped<UserManager<IdentityUser>>();
+builder.Services.AddScoped<SignInManager<IdentityUser>>();
+
+
+
+builder.Services.AddRazorPages();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddServerSideBlazor();
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<PobretitoDbContext>();
 
 var app = builder.Build();
+
+UserService.SetManagers(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -22,11 +37,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
 app.UseAuthentication();
+
 
 app.MapControllerRoute(
     name: "default",
@@ -36,5 +52,7 @@ app.MapControllerRoute(
     name: "RegisterUser",
     pattern: "{controller=Home}/{action=Create}");
 
+app.MapDefaultControllerRoute();
+app.MapBlazorHub();
 
 app.Run();
