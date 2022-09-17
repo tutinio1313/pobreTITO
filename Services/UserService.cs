@@ -8,15 +8,15 @@ namespace pobreTITO_Services
 {
     public static class UserService
     {
-        private static UserManager<IdentityUser> userManager;
-        private static SignInManager<IdentityUser> signInManager;
+        private static UserManager<User> userManager;
+        private static SignInManager<User> signInManager;
 
         public static void SetManagers(IApplicationBuilder app)
         {
             PobretitoDbContext context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<PobretitoDbContext>();
 
-            userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            signInManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SignInManager<IdentityUser>>();
+            userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<User>>();
+            signInManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SignInManager<User>>();
         }
 
         public async static Task<Response> Register(RegisterViewModel register)
@@ -86,7 +86,7 @@ namespace pobreTITO_Services
             Response response = new Response();
             try
             {
-                IdentityUser user = await userManager.FindByEmailAsync(request.email);
+                User user = await userManager.FindByEmailAsync(request.email);
 
 
                 if (user != null)
@@ -120,7 +120,7 @@ namespace pobreTITO_Services
 
         private static bool HaveObjectNulls(RegisterViewModel register)
         {
-            if (register.id == null || register.name == null || register.lastname == null || register.email == null || register.emailConfimation == null || register.password == null || register.passwordConfirmation == null)
+            if (String.IsNullOrEmpty(register.id) || String.IsNullOrEmpty(register.name) || String.IsNullOrEmpty(register.lastname) || String.IsNullOrEmpty(register.email) || String.IsNullOrEmpty(register.emailConfimation) || String.IsNullOrEmpty(register.password) || String.IsNullOrEmpty(register.passwordConfirmation))
             {
                 return true;
             }
