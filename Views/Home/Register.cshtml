@@ -8,7 +8,7 @@
     <h2 style="text-align: center;">@ViewData["Title"]</h2>
     <hr>
 
-    <form class="form" id="RegisterForm" asp-action="Create" method="post">
+    <form class="form" id="RegisterForm" asp-action="Create" asp-controller = "User" method="post">
         <div asp-validation-summary="All"></div>
         <div class="column" id="columnA">
             <label asp-for="email">Email</label>

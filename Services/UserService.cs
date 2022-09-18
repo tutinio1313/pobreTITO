@@ -13,8 +13,6 @@ namespace pobreTITO_Services
 
         public static void SetManagers(IApplicationBuilder app)
         {
-            PobretitoDbContext context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<PobretitoDbContext>();
-
             userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<User>>();
             signInManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SignInManager<User>>();
         }
@@ -22,34 +20,25 @@ namespace pobreTITO_Services
         public async static Task<Response> Register(RegisterViewModel register)
         {
 
-            Response response = new Response();
-            response.Messages = new List<string>();
-
-            bool existsUserEmail;
-
-            if (userManager.FindByEmailAsync(register.email) != null)
-            {
-                existsUserEmail = true;
-            }
-            else
-            {
-                existsUserEmail = false;
-            }
+            Response response = new();
+        
+            bool noExistsUserEmail = !userManager.FindByEmailAsync(register.email).Equals(null);
             bool areEmailEquals = register.email.Equals(register.emailConfimation);
             bool arePasswordsEquals = register.email.Equals(register.emailConfimation);
 
-            if (HaveObjectNulls(register))
+            if (!HaveObjectNulls(register))
             {
-                if (!existsUserEmail && areEmailEquals && arePasswordsEquals)
+                if (noExistsUserEmail && areEmailEquals && arePasswordsEquals)
                 {
                     response.StateExecution = true;
 
-                    User user = new User
+                    User user = new()
                     {
                         DNI = register.id,
                         Name = register.name,
                         Lastname = register.lastname,
-                        Email = register.email,
+                        UserName = register.email,
+                        Email = register.email
                     };
 
                     await userManager.CreateAsync(user, register.password);
@@ -59,7 +48,7 @@ namespace pobreTITO_Services
                 {
                     response.StateExecution = false;
 
-                    if (existsUserEmail)
+                    if (!noExistsUserEmail)
                     {
                         response.Messages.Add("el email ya esta registrado");
                     }
@@ -83,7 +72,7 @@ namespace pobreTITO_Services
 
         public async static Task<Response> Login(LoginViewModel request)
         {
-            Response response = new Response();
+            Response response = new();
             try
             {
                 User user = await userManager.FindByEmailAsync(request.email);

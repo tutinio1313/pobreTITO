@@ -33,7 +33,7 @@ public class UserController : Controller
 
             if (response.StateExecution)
             {
-                return View(Index());
+                return View("Index");
             }
             else
             {
