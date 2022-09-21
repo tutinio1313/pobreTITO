@@ -20,7 +20,18 @@ builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<PobretitoDbContext>();
+//Sí bien esta mal porque baja la seguridad esta bien para testear.
+
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+        { 
+            options.Password.RequiredLength = 8;
+            options.Password.RequireDigit = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequiredUniqueChars = 0;        
+        }    
+    ).AddEntityFrameworkStores<PobretitoDbContext>();
 
 var app = builder.Build();
 

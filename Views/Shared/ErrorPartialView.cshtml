@@ -1,0 +1,12 @@
+@using pobreTITO_Models
+@model ErrorMessage
+
+<div class="containerRegister" style="margin-top:-1%; z-index:2;" id="StateMessages">
+    @{
+     foreach (var item in Model.Messages)
+     {
+        <p class="text-center fs-6 text-decoration-underline" style="color:#ab2020;" id="message">@item</p>
+     }   
+    }
+    <p class="text-center fs-6 text-decoration-underline" style="color:#ab2020;" id="message"></p>
+</div>

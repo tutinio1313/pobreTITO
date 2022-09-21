@@ -11,7 +11,7 @@ namespace pobreTITO.Controllers;
 public class UserController : Controller
 {
     private readonly ILogger<UserController> _logger;
-
+    private ErrorMessage message = new();
     public UserController(ILogger<UserController> logger)
     {
         _logger = logger;
@@ -27,6 +27,7 @@ public class UserController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(RegisterViewModel request)
     {
+        ClearMessageList();
         if (ModelState.IsValid)
         {
             Response response = await UserService.Register(request);
@@ -36,34 +37,47 @@ public class UserController : Controller
                 return View("Index");
             }
             else
-            {
-                return PartialView();
+            {                
+                message.Messages = response.Messages;
+                return PartialView("ErrorPartialView", message);
             }
         }
         else
         {
-            return PartialView();
+           message.Messages.Add("Oops parece que hubo registrando el usuario, pruebe más tarde.");
+           return PartialView("ErrorPartialView", message);
         }
     }
 
     public async Task<IActionResult> Login(LoginViewModel request)
     {
+        ClearMessageList();
         if (ModelState.IsValid)
         {
             Response response = await UserService.Login(request);
 
             if (response.StateExecution)
             {
-                return View(Index());
+                return View("Index");
             }
             else
             {
-                return PartialView();
+                message.Messages = response.Messages;
+                return PartialView("ErrorPartialView", message);
             }
         }
         else
         {
-            return PartialView();
+           message.Messages.Add("Oops parece que hubo en el inicio de sesión, pruebe más tarde.");
+           return PartialView("ErrorPartialView", message);
+        }
+    }
+
+    private void ClearMessageList()
+    {
+        if(message.Messages.Count > 0)
+        {
+            message.Messages.Clear();
         }
     }
 

@@ -4,7 +4,7 @@
 }
 
 <div class="containerRegister py-4">
-    <form class="form mt-auto needs-validation" asp-action="Login" asp-controller="User">
+    <form class="form mt-auto needs-validation" style="z-index:3;" asp-action="Login" asp-controller="User">
         <div asp-validation-summary="All"></div>
         <h2>@ViewData["Title"]</h2>
         <hr>
@@ -28,8 +28,4 @@
             <button type="submit" id="submit" class="btn btn-primary btn-block" disabled>Ingresar</button>
         </div>
     </form>
-</div>
-
-<div id="StateMessages">
-
 </div>
