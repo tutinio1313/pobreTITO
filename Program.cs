@@ -20,8 +20,6 @@ builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddServerSideBlazor();
 
-//Sí bien esta mal porque baja la seguridad esta bien para testear.
-
 builder.Services.AddIdentity<User, IdentityRole>(options =>
         { 
             options.Password.RequiredLength = 8;

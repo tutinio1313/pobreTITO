@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using pobreTITO_Models;
 using pobreTITO;
@@ -10,6 +11,7 @@ namespace pobreTITO_Services
     {
         private static UserManager<User> userManager;
         private static SignInManager<User> signInManager;
+        private  static PobretitoDbContext context;
 
         public static void SetManagers(IApplicationBuilder app)
         {
@@ -22,16 +24,16 @@ namespace pobreTITO_Services
 
             Response response = new();
         
-            bool noExistsUserEmail = !userManager.FindByEmailAsync(register.email).Equals(null);
+            bool ExistsUserEmail = userManager.FindByEmailAsync(register.email).Equals(null);
             bool areEmailEquals = register.email.Equals(register.emailConfimation);
             bool arePasswordsEquals = register.email.Equals(register.emailConfimation);
 
             if (!HaveObjectNulls(register))
             {
-                if (noExistsUserEmail && areEmailEquals && arePasswordsEquals)
+                DbContextOptions contextOptions = new DbContextOptionsBuilder<PobretitoDbContext>().UseSqlite("Data Source=db/pobretito.sqlite; Cache=default").Options;
+                if (!ExistsUserEmail && areEmailEquals && arePasswordsEquals)
                 {
                     response.StateExecution = true;
-
                     User user = new()
                     {
                         DNI = register.id,
@@ -48,7 +50,7 @@ namespace pobreTITO_Services
                 {
                     response.StateExecution = false;
 
-                    if (!noExistsUserEmail)
+                    if (ExistsUserEmail)
                     {
                         response.Messages.Add("el email ya esta registrado");
                     }
