@@ -12,6 +12,6 @@
 <h2>Diagramas</h2>
 
 <h4>Diagrama de Clases</h4>
-![Diagrama de Clases](https://user-images.githubusercontent.com/43465958/192652321-87d329ba-3b97-4a93-af7e-841b7ef1b4fc.png)
+<img src="https://user-images.githubusercontent.com/43465958/192652321-87d329ba-3b97-4a93-af7e-841b7ef1b4fc.png">
 <h4>Diagrama de Casos de Usos</h4>
-![Diagrama Caso de Usos](https://user-images.githubusercontent.com/43465958/192652353-eb3cf998-d7a3-47a4-9ad5-10e997fa3f27.png)
+<img src="https://user-images.githubusercontent.com/43465958/192652353-eb3cf998-d7a3-47a4-9ad5-10e997fa3f27.png">
