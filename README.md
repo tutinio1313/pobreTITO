@@ -3,7 +3,7 @@
 
 <h2>Dependencias</h2>
 <ul>
-    <li><p>Para el manejo de consultas se uso C# y ASPNet.</p></li>
+    <li><p>Para el manejo de consultas se uso .Net.</p></li>
     <li><p>Para la persistencia de datos se usó SQLite3.</p></li>
     <li><p>Para la parte visual se usó Bootstrap 5.1.</p></li>
 </ul>
