@@ -5,5 +5,13 @@
 <ul>
     <li><p>Para el manejo de consultas se uso .Net.</p></li>
     <li><p>Para la persistencia de datos se usó SQLite3.</p></li>
-    <li><p>Para la parte visual se usó Bootstrap 5.1.</p></li>
+    <li><p>Para la parte visual se usó HTML, Bootstrap 5.1 y JS.</p></li>
+    
 </ul>
+
+<h2>Diagramas</h2>
+
+<h4>Diagrama de Clases</h4>
+![Diagrama de Clases](https://user-images.githubusercontent.com/43465958/192652321-87d329ba-3b97-4a93-af7e-841b7ef1b4fc.png)
+<h4>Diagrama de Casos de Usos</h4>
+![Diagrama Caso de Usos](https://user-images.githubusercontent.com/43465958/192652353-eb3cf998-d7a3-47a4-9ad5-10e997fa3f27.png)
