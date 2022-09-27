@@ -1,0 +1,48 @@
+Diagrama de Caso de Uso:
+
+UseCaseDiagram [frame=false framecolor=steelblue label="pobreTITO"] {
+  actor a as "Persona"
+    
+  usecase u1 as "Registrar usuario"
+  usecase u2 as "Logear usuario"
+  usecase u3 as "Registrar incidente"
+  
+  a -- u1
+  a -- u2
+  a -- u3
+}
+
+Diagrama de Clases:
+ClassDiagram [frame=false framecolor=steelblue label="Diagrama de Clases"] {
+ abstract class User {
+  private ID : string
+  private name : string
+  private lastname : string
+  private email : string
+  private password : string
+ }
+ abstract class Report {
+  public ID : string
+  public address : string
+  public idUser : string
+  public type : ReportType
+  public message : string
+  public urlImage : string
+ }
+ enumeration ReportType
+  {
+    AlumbradoPublico
+    Bacheo
+    Ciclistas
+    Cloacas    
+    EspacioVerdes
+    Semaforos
+  }  
+  User -- Report;
+  ReportType --> Report;
+  
+  align {
+  User
+  Report
+ 	}
+}
