@@ -14,5 +14,7 @@ namespace pobreTITO_Models
         [Required(ErrorMessage = "Oops, debes ingresar la contraseña.")]
         [DataType(DataType.Password)]
         public string password { get; set; }
+
+        public List<string>? messages {get; set;} = new();
     }
 }

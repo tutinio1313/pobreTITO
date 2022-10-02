@@ -8,17 +8,16 @@
     <h2 style="text-align: center;">@ViewData["Title"]</h2>
     <hr>
 
-    <form class="form" id="RegisterForm" asp-action="Create" asp-controller = "User" method="post">
+    <form class="form" id="RegisterForm" asp-action="Create" asp-controller="User" method="post">
         <div asp-validation-summary="All"></div>
         <div class="column" id="columnA">
             <label asp-for="email">Email</label>
             <input class="registerInput" asp-for="email" id="email" data-val="true"
                 data-val-required="Por favor ingrese su Email." onchange="canPost()" type="email">
 
-            <label asp-for="emailConfimation">Confirmar Email</label>
-            <input class="registerInput" asp-for="emailConfimation" data-val="true"
-                data-val-required="Por favor reingrese su Email." onchange="canPost()" id="emailConfirmation"
-                type="email">
+            <label for="emailConfirmation">Confirmar Email</label>
+            <input class="registerInput" data-val="true" data-val-required="Por favor reingrese su Email."
+                onchange="canPost()" id="emailConfirmation" type="email">
 
             <label asp-for="name">Nombre</label>
             <input class="registerInput" asp-for="name" data-val="true" data-val-required="Por favor ingrese su nombre."
@@ -35,10 +34,9 @@
                 data-val-required="Por favor reingrese la contraseña." id="password" onchange="canPost()"
                 type="password">
 
-            <label asp-for="passwordConfirmation">Confirmar contraseña</label>
-            <input class="registerInput" asp-for="passwordConfirmation" data-val="true"
-                data-val-required="Por favor reingrese su contraseña." onchange="canPost()" id="passwordConfirmation"
-                type="password">
+            <label for="passwordConfirmation">Confirmar contraseña</label>
+            <input class="registerInput" data-val="true" data-val-required="Por favor reingrese su contraseña."
+                onchange="canPost()" id="passwordConfirmation" type="password">
         </div>
 
         <div class="column" id="columnC">
@@ -49,12 +47,14 @@
         <div id="submitContainer" class="mx-auto col-md-4 mt-3">
             <button id="submit" type="submit" class="btn btn-primary btn-block" disabled>Registrarse</button>
         </div>
-
     </form>
 
-</div>
-
-
-<div id="StateMessages">
-
+    <div id="ErrorMessages">
+        @{
+            foreach (var item in Model.messages)
+            {
+                <p class="text-center fs-6 text-decoration-underline" style="color:#ab2020;" id="message">@item</p>
+            }
+        }
+    </div>
 </div>

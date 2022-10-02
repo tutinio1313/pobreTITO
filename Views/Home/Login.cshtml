@@ -4,14 +4,16 @@
 }
 
 <div class="containerRegister py-4">
-    <form class="form mt-auto needs-validation" style="z-index:3;" asp-action="Login" asp-controller="User">
+    <form class="form mt-auto needs-validation" id="LoginForm" style="z-index:3;" asp-action="Login"
+        asp-controller="User">
         <div asp-validation-summary="All"></div>
         <h2>@ViewData["Title"]</h2>
         <hr>
         <div class="mx-auto col-md-auto">
             <label asp-for="email" class="form-label" for="email">Ingrese el Email.</label>
             <div class="input-group has-validation" onchange="canPost()">
-                <input asp-for="email" class="form-control width-50" id="email" style = "text-align : center;" type="email" required>
+                <input asp-for="email" class="form-control width-50" id="email" style="text-align : center;"
+                    type="email" required>
                 <div class="invalid-feedback">
                     Oops parece que no has ingresado un Email correcto.
                 </div>
@@ -19,13 +21,26 @@
         </div>
 
         <div class="mx-auto col-md-auto">
-            <label asp-for="password" class="form-label" for="password" >Ingrese la
+            <label asp-for="password" class="form-label" for="password">Ingrese la
                 contraseña.</label>
-            <input class="form-control width-50" style = "text-align : center;" asp-for="password" id="password" type="password" onchange="canPost()" required>
+            <input class="form-control width-50" style="text-align : center;" asp-for="password" id="password"
+                type="password" onchange="canPost()" required>
         </div>
 
         <div class="mx-auto col-md-4 mt-3">
             <button type="submit" id="submit" class="btn btn-primary btn-block" disabled>Ingresar</button>
         </div>
     </form>
+
+    <div id="ErrorMessages">
+        @{
+            if (Model != null)
+            {
+                foreach (var item in Model.messages)
+                {
+                    <p class="text-center fs-6 text-decoration-underline" style="color:#ab2020;" id="message">@item</p>
+                }
+            }
+        }
+    </div>
 </div>

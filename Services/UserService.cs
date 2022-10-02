@@ -8,7 +8,7 @@ namespace pobreTITO_Services
     {
         private static UserManager<User> userManager;
         private static SignInManager<User> signInManager;
-        private  static PobretitoDbContext context;
+        private static PobretitoDbContext context;
 
         public static void SetManagers(IApplicationBuilder app)
         {
@@ -16,19 +16,16 @@ namespace pobreTITO_Services
             signInManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SignInManager<User>>();
         }
 
-        public async static Task<Response> Register(RegisterViewModel register)
+        public async static Task<Response> Register(RegisterViewModel register, PobretitoDbContext context)
         {
-
             Response response = new();
-        
-            bool ExistsUserEmail = userManager.FindByEmailAsync(register.email).Equals(null);
-            bool areEmailEquals = register.email.Equals(register.emailConfimation);
-            bool arePasswordsEquals = register.email.Equals(register.emailConfimation);
 
             if (!HaveObjectNulls(register))
             {
-                DbContextOptions contextOptions = new DbContextOptionsBuilder<PobretitoDbContext>().UseSqlite("Data Source=db/pobretito.sqlite; Cache=default").Options;
-                if (!ExistsUserEmail && areEmailEquals && arePasswordsEquals)
+                bool alredyExistsUserEmail = userManager.FindByEmailAsync(register.email).Equals(null);
+                bool alredyExistsDNI = context.Users.Where(x => x.DNI == register.id) != null;
+
+                if (!alredyExistsUserEmail && !alredyExistsDNI)
                 {
                     response.StateExecution = true;
                     User user = new()
@@ -47,15 +44,14 @@ namespace pobreTITO_Services
                 {
                     response.StateExecution = false;
 
-                    if (ExistsUserEmail)
+                    if (alredyExistsUserEmail)
                     {
                         response.Messages.Add("el email ya esta registrado");
                     }
-                    else
+                    if (alredyExistsDNI)
                     {
                         response.Messages.Add("El dni ya esta registrado.");
                     }
-
                 }
             }
 
@@ -76,10 +72,9 @@ namespace pobreTITO_Services
             {
                 User user = await userManager.FindByEmailAsync(request.email);
 
-
                 if (user != null)
                 {
-                    await signInManager.SignOutAsync();
+                    //await signInManager.SignOutAsync();
                     if ((await signInManager.PasswordSignInAsync(user, request.password, false, false)).Succeeded)
                     {
                         response.StateExecution = true;
@@ -108,7 +103,7 @@ namespace pobreTITO_Services
 
         private static bool HaveObjectNulls(RegisterViewModel register)
         {
-            if (String.IsNullOrEmpty(register.id) || String.IsNullOrEmpty(register.name) || String.IsNullOrEmpty(register.lastname) || String.IsNullOrEmpty(register.email) || String.IsNullOrEmpty(register.emailConfimation) || String.IsNullOrEmpty(register.password) || String.IsNullOrEmpty(register.passwordConfirmation))
+            if (String.IsNullOrEmpty(register.id) || String.IsNullOrEmpty(register.name) || String.IsNullOrEmpty(register.lastname) || String.IsNullOrEmpty(register.email)|| String.IsNullOrEmpty(register.password))
             {
                 return true;
             }

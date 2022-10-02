@@ -11,10 +11,13 @@ namespace pobreTITO.Controllers;
 public class UserController : Controller
 {
     private readonly ILogger<UserController> _logger;
+    private readonly PobretitoDbContext _context;
     private ErrorMessage message = new();
-    public UserController(ILogger<UserController> logger)
+    
+    public UserController(ILogger<UserController> logger, PobretitoDbContext context)
     {
         _logger = logger;
+        _context = context;
     }
 
 
@@ -30,7 +33,7 @@ public class UserController : Controller
         ClearMessageList();
         if (ModelState.IsValid)
         {
-            Response response = await UserService.Register(request);
+            Response response = await UserService.Register(request, _context);
 
             if (response.StateExecution)
             {
@@ -39,13 +42,13 @@ public class UserController : Controller
             else
             {                
                 message.Messages = response.Messages;
-                return PartialView("ErrorPartialView", message);
+                return RedirectToAction("Register","Home", message);
             }
         }
         else
         {
            message.Messages.Add("Oops parece que hubo registrando el usuario, pruebe más tarde.");
-           return PartialView("ErrorPartialView", message);
+           return RedirectToAction("Register","Home", message);
         }
     }
 
@@ -63,13 +66,13 @@ public class UserController : Controller
             else
             {
                 message.Messages = response.Messages;
-                return PartialView("ErrorPartialView", message);
+                return RedirectToAction("Login","Home", message);
             }
         }
         else
         {
            message.Messages.Add("Oops parece que hubo en el inicio de sesión, pruebe más tarde.");
-           return PartialView("ErrorPartialView", message);
+           return RedirectToAction("Login","Home", message);
         }
     }
 

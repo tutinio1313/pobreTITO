@@ -14,11 +14,7 @@ namespace pobreTITO_Models
         [Required(ErrorMessage = "Oops, debes ingresar el email.")]
         [DataType(DataType.EmailAddress)]
         public string email { get; set; }
-
-        [Required(ErrorMessage = "Oops, debes ingresar el email de confirmación.")]
-        [DataType(DataType.EmailAddress)]
-        public string emailConfimation { get; set; }
-
+        
         [Required(ErrorMessage = "Oops, debes ingresar el nombre.")]
         [DataType(DataType.Text)]
         public string name { get; set; }
@@ -31,8 +27,6 @@ namespace pobreTITO_Models
         [DataType(DataType.Password)]
         public string password { get; set; }
 
-        [Required(ErrorMessage = "Oops, debes ingresar la confirmación de la contraseña.")]
-        [DataType(DataType.Password)]
-        public string passwordConfirmation { get; set; }
+        public List<string>? messages {get; set;} = new();
     }
 }
