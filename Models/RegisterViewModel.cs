@@ -15,16 +15,16 @@ namespace pobreTITO_Models
         [DataType(DataType.EmailAddress)]
         public string email { get; set; }
 
-        [Required(ErrorMessage = "Oops, debes ingresar el email.")]
+        [Required(ErrorMessage = "Oops, debes ingresar el email de confirmación.")]
         [DataType(DataType.EmailAddress)]
         public string emailConfimation { get; set; }
 
-        [Required(ErrorMessage = "Oops, debes ingresar el email.")]
-        [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "Oops, debes ingresar el nombre.")]
+        [DataType(DataType.Text)]
         public string name { get; set; }
 
-        [Required(ErrorMessage = "Oops, debes ingresar el email.")]
-        [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "Oops, debes ingresar el apellido.")]
+        [DataType(DataType.Text)]
         public string lastname { get; set; }
 
         [Required(ErrorMessage = "Oops, debes ingresar la contraseña.")]

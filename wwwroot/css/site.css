@@ -85,7 +85,7 @@ hr {
 }
 
 .registerInput {
-  border: 3px solid #848484;
-  border-radius: 10px;
+  border: 1px solid #CED4DA;
+  border-radius: 5px;
   text-align: center;
 }
