@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using pobreTITO_Models;
 using pobreTITO_Services;
 namespace pobreTITO.Controllers;
+#pragma warning disable 1998
 
 public class HomeController : Controller
 {
@@ -14,11 +15,11 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-    public async Task<ViewResult> Index() => View();
+    public async Task<IActionResult> Index() => View();
     [Route("/Login")]
-    public async Task<ViewResult> Login() => View();
+    public async Task<IActionResult> Login() => View();
     [Route("/Register")]
-    public async Task<ViewResult> Register() => View();
+    public async Task<IActionResult> Register() => View();
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

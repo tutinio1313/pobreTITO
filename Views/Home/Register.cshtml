@@ -49,11 +49,17 @@
         </div>
     </form>
 
-    <div id="ErrorMessages">
+    <div id="ErrorMessageContainer">
         @{
-            foreach (var item in Model.messages)
+            if (Model != null)
             {
-                <p class="text-center fs-6 text-decoration-underline" style="color:#ab2020;" id="message">@item</p>
+                if (Model.messages != null)
+                {
+                    foreach (var item in Model.messages)
+                    {
+                        <p class="text-center fs-6 text-decoration-underline" style="color:#ab2020;" id="message">@item</p>
+                    }
+                }
             }
         }
     </div>

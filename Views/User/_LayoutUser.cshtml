@@ -1,22 +1,44 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
+@attribute [Authorize]
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - pobreTITO</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/pobreTITO.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/pobreTITO.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="User" asp-action="Index">pobreTITO</a>
-                
-                <div id="userAccessContainer">
-                    <a asp-action = "Logout" asp-controller = "User"><button class="btn btn-primary btn-block" id="signin">Desloguearse</button></a>
-                </div>
+
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <div id="userAccessContainer">
+                        <a asp-action="Logout" asp-controller="User"><button class="btn btn-primary btn-block"
+                            id="signin">Desloguearse</button></a>
+                    </div>
+                }
+                else
+                {
+                    <div id="userAccessContainer">
+                        <a asp-action="Login" asp-controller="Home"><button class="btn btn-primary btn-block"
+                            id="signin">Ingresar</button></a>
+                        <a asp-action="Register" asp-controller="Home"><button class="btn btn-primary btn-block"
+                            id="signup">Registrarse</button></a>
+                    </div>
+                }
             </div>
         </nav>
     </header>
@@ -36,4 +58,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

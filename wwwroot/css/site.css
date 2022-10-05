@@ -89,3 +89,10 @@ hr {
   border-radius: 5px;
   text-align: center;
 }
+
+#ErrorMessage
+{
+  text-align: center;
+  font-size: small;
+  color: darkred;
+}

@@ -42,12 +42,12 @@ function CanRegister(inputs) {
     return false;
   }
 
-  if (inputs[5].value.length < 8) {
+  if (inputs[4].value.length < 8) {
     ShowErrorMessage("La contraseña debe ser de al menos 8 caracteres.");
     return false;
   }
 
-  if (inputs[5].value != inputs[6].value) {
+  if (inputs[4].value != inputs[5].value) {
     ShowErrorMessage("Las contraseñas no son iguales, por favor revise");
     return false;
   }
@@ -73,9 +73,12 @@ function NotEmpty(inputs) {
 }
 
 async function ShowErrorMessage(message) {
-  var element = document.getElementById("ErrorMessages");
+  var p = document.createElement('p');
+  p.setAttribute('id', 'ErrorMessage');
+  p.innerText = message;
+  var element = document.getElementById("ErrorMessageContainer");
 
-  element.appendChild(message);
+  element.appendChild(p);
 
   setTimeout(() => {
     element.removeChild(element.firstElementChild);

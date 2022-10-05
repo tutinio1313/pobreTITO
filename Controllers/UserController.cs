@@ -7,13 +7,16 @@ using pobreTITO_Services;
 
 #pragma warning disable 1998
 
+
 namespace pobreTITO.Controllers;
 public class UserController : Controller
 {
+#pragma warning disable CS8618
     private readonly ILogger<UserController> _logger;
     private readonly PobretitoDbContext _context;
     private ErrorMessage message = new();
-    
+#pragma warning restore CS8618
+
     public UserController(ILogger<UserController> logger, PobretitoDbContext context)
     {
         _logger = logger;
@@ -26,6 +29,12 @@ public class UserController : Controller
 
     [Route("/AgregarReporte")]
     public async Task<IActionResult> AddReport() => View();
+    [Route("/Logout")]
+    public async Task<IActionResult> Logout()
+    {
+        UserService.Logout();
+        return RedirectToAction("Index", "Home");
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create(RegisterViewModel request)
@@ -40,15 +49,15 @@ public class UserController : Controller
                 return View("Index");
             }
             else
-            {                
+            {
                 message.Messages = response.Messages;
-                return RedirectToAction("Register","Home", message);
+                return RedirectToAction("Register", "Home", message);
             }
         }
         else
         {
-           message.Messages.Add("Oops parece que hubo registrando el usuario, pruebe más tarde.");
-           return RedirectToAction("Register","Home", message);
+            message.Messages.Add("Oops parece que hubo registrando el usuario, pruebe más tarde.");
+            return RedirectToAction("Register", "Home", message);
         }
     }
 
@@ -66,22 +75,19 @@ public class UserController : Controller
             else
             {
                 message.Messages = response.Messages;
-                return RedirectToAction("Login","Home", message);
+                return RedirectToAction("Login", "Home", message);
             }
         }
         else
         {
-           message.Messages.Add("Oops parece que hubo en el inicio de sesión, pruebe más tarde.");
-           return RedirectToAction("Login","Home", message);
+            message.Messages.Add("Oops parece que hubo en el inicio de sesión, pruebe más tarde.");
+            return RedirectToAction("Login", "Home", message);
         }
     }
 
     private void ClearMessageList()
     {
-        if(message.Messages.Count > 0)
-        {
-            message.Messages.Clear();
-        }
+        message.Messages = new();
     }
 
 

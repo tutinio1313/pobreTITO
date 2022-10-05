@@ -36,9 +36,12 @@
         @{
             if (Model != null)
             {
-                foreach (var item in Model.messages)
+                if (Model.messages != null)
                 {
-                    <p class="text-center fs-6 text-decoration-underline" style="color:#ab2020;" id="message">@item</p>
+                    foreach (var item in Model.messages)
+                    {
+                        <p class="text-center fs-6 text-decoration-underline" id="ErrorMessage">@item</p>
+                    }
                 }
             }
         }

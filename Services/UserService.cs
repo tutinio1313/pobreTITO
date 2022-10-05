@@ -6,9 +6,11 @@ namespace pobreTITO_Services
 {
     public static class UserService
     {
+        #pragma warning disable CS8618
         private static UserManager<User> userManager;
         private static SignInManager<User> signInManager;
         private static PobretitoDbContext context;
+        
 
         public static void SetManagers(IApplicationBuilder app)
         {
@@ -22,12 +24,13 @@ namespace pobreTITO_Services
 
             if (!HaveObjectNulls(register))
             {
-                bool alredyExistsUserEmail = userManager.FindByEmailAsync(register.email).Equals(null);
-                bool alredyExistsDNI = context.Users.Where(x => x.DNI == register.id) != null;
+                bool alredyExistsUserEmail = context.Users.Where(x => x.Email == register.email).Equals(null);
+                bool alredyExistsDNI = context.Users.Where(x => x.DNI == register.id).Equals(null);
 
                 if (!alredyExistsUserEmail && !alredyExistsDNI)
                 {
-                    response.StateExecution = true;
+                    IdentityUser a = new();
+                    
                     User user = new()
                     {
                         DNI = register.id,
@@ -37,7 +40,10 @@ namespace pobreTITO_Services
                         Email = register.email
                     };
 
-                    await userManager.CreateAsync(user, register.password);
+                    
+
+                   var abc = await userManager.CreateAsync(user, register.password);
+                   response.StateExecution = abc.Succeeded;
                 }
 
                 else
@@ -101,9 +107,14 @@ namespace pobreTITO_Services
             return response;
         }
 
+        public async static void Logout()
+        {
+            await signInManager.SignOutAsync();
+        }
+
         private static bool HaveObjectNulls(RegisterViewModel register)
         {
-            if (String.IsNullOrEmpty(register.id) || String.IsNullOrEmpty(register.name) || String.IsNullOrEmpty(register.lastname) || String.IsNullOrEmpty(register.email)|| String.IsNullOrEmpty(register.password))
+            if (String.IsNullOrEmpty(register.id) || String.IsNullOrEmpty(register.name) || String.IsNullOrEmpty(register.lastname) || String.IsNullOrEmpty(register.email) || String.IsNullOrEmpty(register.password))
             {
                 return true;
             }

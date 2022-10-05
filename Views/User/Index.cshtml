@@ -2,8 +2,40 @@
     ViewData["Title"] = "Gestor de incidentes";
     Layout = "_LayoutUser";
 }
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
+@attribute [Authorize]
 
-<div class="text-center">
+
+@if (signInManager.IsSignedIn(User))
+{
+    <div class="container-fluid">
+
+    </div>
+}
+
+else
+{
+    <script defer>
+        var a = document.getElementById('principal');
+        a.removeAttribute('id');
+        a.setAttribute('id', 'BadLogin');
+    </script>
+
+    <div style="padding: 10px; background-color: #FFFFFF; border: 10px solid #FFFFFF; border-radius: 10px;"
+    class="text-center">
+        <h2 class="card-title">Error 401 : No estas autorizado.</h2>
+        <h6>Para ver este apartado debes iniciar sesión</h6>
+        <a class="btn btn-primary " data-toggle="pill" href="@Url.Action("Index", "Login")">Ingresar</a>
+    </div>
+}
+
+
+
+@* <div class="text-center">
     <h2>Gestor</h2>
     <h3>welcome.</h3>
-</div>
+    </div> *@
