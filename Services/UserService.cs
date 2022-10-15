@@ -18,7 +18,7 @@ namespace pobreTITO_Services
             signInManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SignInManager<User>>();
         }
 
-        public async static Task<Response> Register(RegisterViewModel register, PobretitoDbContext context)
+        public async static Task<Response> Register(RegisterViewModel register)
         {
             Response response = new();
 
@@ -80,7 +80,7 @@ namespace pobreTITO_Services
 
                 if (user != null)
                 {
-                    //await signInManager.SignOutAsync();
+                    await signInManager.SignOutAsync();
                     if ((await signInManager.PasswordSignInAsync(user, request.password, false, false)).Succeeded)
                     {
                         response.StateExecution = true;
@@ -107,10 +107,8 @@ namespace pobreTITO_Services
             return response;
         }
 
-        public async static void Logout()
-        {
-            await signInManager.SignOutAsync();
-        }
+        public async static Task Logout() => await signInManager.SignOutAsync();
+    
 
         private static bool HaveObjectNulls(RegisterViewModel register)
         {

@@ -34,16 +34,9 @@
 
     <div id="ErrorMessages">
         @{
-            if (Model != null)
-            {
-                if (Model.messages != null)
-                {
-                    foreach (var item in Model.messages)
-                    {
-                        <p class="text-center fs-6 text-decoration-underline" id="ErrorMessage">@item</p>
-                    }
-                }
-            }
+            <p>
+                @ViewData["messages"]
+            </p>
         }
     </div>
 </div>

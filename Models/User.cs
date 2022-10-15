@@ -8,8 +8,8 @@ namespace pobreTITO_Models
 {
     public class User : IdentityUser
     {
-        public string Name { get; set; }
-        public string Lastname { get; set; }
-        public string DNI {get; set;}
+        public string Name { get; set; } = String.Empty;
+        public string Lastname { get; set; } = String.Empty;
+        public string DNI {get; set;} = String.Empty;
     }
 }

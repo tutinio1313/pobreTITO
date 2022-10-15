@@ -13,14 +13,11 @@ public class UserController : Controller
 {
 #pragma warning disable CS8618
     private readonly ILogger<UserController> _logger;
-    private readonly PobretitoDbContext _context;
-    private ErrorMessage message = new();
 #pragma warning restore CS8618
 
-    public UserController(ILogger<UserController> logger, PobretitoDbContext context)
+    public UserController(ILogger<UserController> logger)
     {
         _logger = logger;
-        _context = context;
     }
 
 
@@ -32,17 +29,17 @@ public class UserController : Controller
     [Route("/Logout")]
     public async Task<IActionResult> Logout()
     {
-        UserService.Logout();
+        await UserService.Logout();
         return RedirectToAction("Index", "Home");
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(RegisterViewModel request)
     {
-        ClearMessageList();
+        IList<string> message = new List<string>();
         if (ModelState.IsValid)
         {
-            Response response = await UserService.Register(request, _context);
+            Response response = await UserService.Register(request);
 
             if (response.StateExecution)
             {
@@ -50,20 +47,20 @@ public class UserController : Controller
             }
             else
             {
-                message.Messages = response.Messages;
-                return RedirectToAction("Register", "Home", message);
+                message = response.Messages;
             }
         }
         else
         {
-            message.Messages.Add("Oops parece que hubo registrando el usuario, pruebe más tarde.");
-            return RedirectToAction("Register", "Home", message);
+            message.Add("Oops parece que hubo registrando el usuario, pruebe más tarde.");
         }
+        ViewData["messages"] = message[0];
+        return RedirectToAction("Register", "Home");
     }
 
     public async Task<IActionResult> Login(LoginViewModel request)
     {
-        ClearMessageList();
+        IList<string> message = new List<string>();
         if (ModelState.IsValid)
         {
             Response response = await UserService.Login(request);
@@ -74,21 +71,18 @@ public class UserController : Controller
             }
             else
             {
-                message.Messages = response.Messages;
-                return RedirectToAction("Login", "Home", message);
+                 message.Add(response.Messages[0]);
             }
         }
         else
         {
-            message.Messages.Add("Oops parece que hubo en el inicio de sesión, pruebe más tarde.");
-            return RedirectToAction("Login", "Home", message);
+            message.Add("Oops parece que hubo en el inicio de sesión, pruebe más tarde.");
         }
+        ViewData["messages"] = message[0];
+        return RedirectToAction("Login", "Home");
     }
 
-    private void ClearMessageList()
-    {
-        message.Messages = new();
-    }
+
 
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
