@@ -10,9 +10,9 @@
         <h2>@ViewData["Title"]</h2>
         <hr>
         <div class="mx-auto col-md-auto">
-            <label asp-for="email" class="form-label" for="email">Ingrese el Email.</label>
+            <label asp-for="Email" class="form-label" for="email">Ingrese el Email.</label>
             <div class="input-group has-validation" onchange="canPost()">
-                <input asp-for="email" class="form-control width-50" id="email" style="text-align : center;"
+                <input asp-for="Email" class="form-control width-50" id="email" style="text-align : center;"
                     type="email" required>
                 <div class="invalid-feedback">
                     Oops parece que no has ingresado un Email correcto.
@@ -21,9 +21,9 @@
         </div>
 
         <div class="mx-auto col-md-auto">
-            <label asp-for="password" class="form-label" for="password">Ingrese la
+            <label asp-for="Password" class="form-label" for="password">Ingrese la
                 contraseña.</label>
-            <input class="form-control width-50" style="text-align : center;" asp-for="password" id="password"
+            <input class="form-control width-50" style="text-align : center;" asp-for="Password" id="password"
                 type="password" onchange="canPost()" required>
         </div>
 
@@ -35,7 +35,7 @@
     <div id="ErrorMessages">
         @{
             <p>
-                @ViewData["messages"]
+                @ViewData["Messages"]
             </p>
         }
     </div>

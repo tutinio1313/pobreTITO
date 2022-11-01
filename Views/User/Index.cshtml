@@ -5,6 +5,9 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Mvc.RazorPages
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
 @attribute [Authorize]
@@ -12,10 +15,34 @@
 
 @if (signInManager.IsSignedIn(User))
 {
-    <div class="container-fluid">
 
+    <div class="container-fluid text-center text-primary" id="UserContainer" style="margin-bottom : 10px;">
+        <h2>¡Bienvenido @((await userManager.GetUserAsync(User)).Name) al gestor de incidentes!</h2>
+        <hr>
     </div>
+
+    <div class="container-fluid">
+        <div class="container" id="UserContainer">
+            <h4>Incidentes cargados</h4>
+            <hr>
+
+            @code {
+            private name = String.Empty;
+
+            protected override void OnInitialized()
+            {
+                base.OnInitialized();
+                name = (await userManager.GetUserAsync(User)).Name;
+            }
+        }
+
+
+        </div>
+    </div>
+
 }
+
+  
 
 else
 {
@@ -32,10 +59,3 @@ else
         <a class="btn btn-primary " data-toggle="pill" href="@Url.Action("Index", "Login")">Ingresar</a>
     </div>
 }
-
-
-
-@* <div class="text-center">
-    <h2>Gestor</h2>
-    <h3>welcome.</h3>
-    </div> *@

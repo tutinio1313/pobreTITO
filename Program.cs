@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Net.Http;
 using pobreTITO_Models;
 using pobreTITO_Services;
 
@@ -29,10 +30,18 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
         }    
     ).AddEntityFrameworkStores<PobretitoDbContext>();
 
+builder.Services.AddScoped(sp => 
+    new HttpClient
+    {
+        BaseAddress = new Uri("http://localhost:1337")
+    });
+
 var app = builder.Build();
 
 UserService.SetManagers(app);
+UserService.SetContext(app);
 
+ReportService.SetContext(app);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -56,6 +65,8 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "RegisterUser",
     pattern: "{controller=Home}/{action=Create}");
+
+    
 
 app.MapDefaultControllerRoute();
 app.MapBlazorHub();

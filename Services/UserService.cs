@@ -6,11 +6,11 @@ namespace pobreTITO_Services
 {
     public static class UserService
     {
-        #pragma warning disable CS8618
+#pragma warning disable CS8618
         private static UserManager<User> userManager;
         private static SignInManager<User> signInManager;
         private static PobretitoDbContext context;
-        
+
 
         public static void SetManagers(IApplicationBuilder app)
         {
@@ -18,32 +18,37 @@ namespace pobreTITO_Services
             signInManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SignInManager<User>>();
         }
 
+        public static void SetContext(IApplicationBuilder app) { context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<PobretitoDbContext>(); }
+
         public async static Task<Response> Register(RegisterViewModel register)
         {
             Response response = new();
 
             if (!HaveObjectNulls(register))
             {
-                bool alredyExistsUserEmail = context.Users.Where(x => x.Email == register.email).Equals(null);
-                bool alredyExistsDNI = context.Users.Where(x => x.DNI == register.id).Equals(null);
+                bool alredyExistsUserEmail = context.Users.Where(x => x.Email == register.Email).Equals(null);
+                bool alredyExistsDNI = context.Users.Where(x => x.DNI == register.Id).Equals(null);
 
                 if (!alredyExistsUserEmail && !alredyExistsDNI)
                 {
                     IdentityUser a = new();
-                    
+
                     User user = new()
                     {
-                        DNI = register.id,
-                        Name = register.name,
-                        Lastname = register.lastname,
-                        UserName = register.email,
-                        Email = register.email
+                        DNI = register.Id,
+                        Name = register.Name,
+                        Lastname = register.Lastname,
+                        UserName = register.Email,
+                        Email = register.Email
                     };
 
-                    
+                    response.StateExecution = (await userManager.CreateAsync(user, register.Password)).Succeeded;
 
-                   var abc = await userManager.CreateAsync(user, register.password);
-                   response.StateExecution = abc.Succeeded;
+                    if (response.StateExecution)
+                    {
+                        await signInManager.SignOutAsync();
+                        var temp = await LoginProcess(user, register.Password);
+                    }
                 }
 
                 else
@@ -76,21 +81,12 @@ namespace pobreTITO_Services
             Response response = new();
             try
             {
-                User user = await userManager.FindByEmailAsync(request.email);
+                User user = await userManager.FindByEmailAsync(request.Email);
 
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
-                    if ((await signInManager.PasswordSignInAsync(user, request.password, false, false)).Succeeded)
-                    {
-                        response.StateExecution = true;
-                        return response;
-                    }
-                    else
-                    {
-                        response.StateExecution = false;
-                        response.Messages.Add("La constraseña es incorrecta.");
-                    }
+                    response = await LoginProcess(user, request.Password);
                 }
                 else
                 {
@@ -107,12 +103,28 @@ namespace pobreTITO_Services
             return response;
         }
 
+
+        public async static Task<Response> LoginProcess(User user, string password)
+        {
+            Response response = new();
+            if ((await signInManager.PasswordSignInAsync(user, password, false, false)).Succeeded)
+            {
+                response.StateExecution = true;
+            }
+            else
+            {
+                response.StateExecution = false;
+                response.Messages.Add("La constraseña es incorrecta.");
+            }
+            return response;
+        }
+
         public async static Task Logout() => await signInManager.SignOutAsync();
-    
+
 
         private static bool HaveObjectNulls(RegisterViewModel register)
         {
-            if (String.IsNullOrEmpty(register.id) || String.IsNullOrEmpty(register.name) || String.IsNullOrEmpty(register.lastname) || String.IsNullOrEmpty(register.email) || String.IsNullOrEmpty(register.password))
+            if (String.IsNullOrEmpty(register.Id) || String.IsNullOrEmpty(register.Name) || String.IsNullOrEmpty(register.Lastname) || String.IsNullOrEmpty(register.Email) || String.IsNullOrEmpty(register.Password))
             {
                 return true;
             }

@@ -6,32 +6,26 @@ namespace pobreTITO_Models
 {
     public class ReportViewModel
     {
-        [Required(ErrorMessage = "Oops, debes ingresar el DNI.")]
-        [DataType(DataType.Text)]
-        [RegularExpression("^[0-9]+$")]
-        public string id { get; set; }
-
         [Required(ErrorMessage = "Oops, parece que hubo un problema con la identificación del usuario.")]
-        [DataType(DataType.Text)]
-        public string idUser { get; set; }
+        public User User { get; set; }
 
         [Required(ErrorMessage = "Oops, debes ingresar la dirección.")]
         [DataType(DataType.Text)]
-        public string address { get; set; }
+        public string Address { get; set; }
 
         [Required(ErrorMessage = "Oops, debes ingresar el apellido.")]
         [DataType(DataType.Text)]
         [RegularExpression("^[0-5]+$")]
-        public string reportType { get; set; }
+        public int ReportType { get; set; }
 
         [Required(ErrorMessage = "Oops, debes ingresar la contraseña.")]
         [DataType(DataType.Text)]
-        public string comment { get; set; }
+        public string Comment { get; set; }
 
         [Required(ErrorMessage = "Oops, debes ingresar la contraseña.")]
         [DataType(DataType.Text)]
-        public string imageURL { get; set; }
+        public string ImageURL { get; set; }
 
-        public List<string>? messages { get; set; } = new();
+        public List<string>? Messages { get; set; } = new();
     }
 }

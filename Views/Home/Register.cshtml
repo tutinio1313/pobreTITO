@@ -11,26 +11,26 @@
     <form class="form" id="RegisterForm" asp-action="Create" asp-controller="User" method="post">
         <div asp-validation-summary="All"></div>
         <div class="column" id="columnA">
-            <label asp-for="email">Email</label>
-            <input class="registerInput" asp-for="email" id="email" data-val="true"
+            <label asp-for="Email">Email</label>
+            <input class="registerInput" asp-for="Email" id="Email" data-val="true"
                 data-val-required="Por favor ingrese su Email." onchange="canPost()" type="email">
 
             <label for="emailConfirmation">Confirmar Email</label>
             <input class="registerInput" data-val="true" data-val-required="Por favor reingrese su Email."
                 onchange="canPost()" id="emailConfirmation" type="email">
 
-            <label asp-for="name">Nombre</label>
-            <input class="registerInput" asp-for="name" data-val="true" data-val-required="Por favor ingrese su nombre."
+            <label asp-for="Name">Nombre</label>
+            <input class="registerInput" asp-for="Name" data-val="true" data-val-required="Por favor ingrese su nombre."
                 id="name" onchange="canPost()" type="text">
         </div>
 
         <div class="column" id="columnB">
-            <label asp-for="lastname">Apellido</label>
-            <input class="registerInput" asp-for="lastname" id="lastname" data-val="true"
+            <label asp-for="Lastname">Apellido</label>
+            <input class="registerInput" asp-for="Lastname" id="lastname" data-val="true"
                 data-val-required="Por favor reingrese su apellido." onchange="canPost()" type="text">
 
-            <label asp-for="password">Contraseña</label>
-            <input class="registerInput" asp-for="password" data-val="true"
+            <label asp-for="Password">Contraseña</label>
+            <input class="registerInput" asp-for="Password" data-val="true"
                 data-val-required="Por favor reingrese la contraseña." id="password" onchange="canPost()"
                 type="password">
 
@@ -40,8 +40,8 @@
         </div>
 
         <div class="column" id="columnC">
-            <label asp-for="id">DNI</label>
-            <input class="registerInput" asp-for="id" name="id" onchange="canPost()" type="text">
+            <label asp-for="Id">DNI</label>
+            <input class="registerInput" asp-for="Id" name="id" onchange="canPost()" type="text">
         </div>
 
         <div id="submitContainer" class="mx-auto col-md-4 mt-3">
@@ -53,9 +53,9 @@
         @{
             if (Model != null)
             {
-                if (Model.messages != null)
+                if (Model.Messages != null)
                 {
-                    foreach (var item in Model.messages)
+                    foreach (var item in Model.Messages)
                     {
                         <p class="text-center fs-6 text-decoration-underline" style="color:#ab2020;" id="message">@item</p>
                     }

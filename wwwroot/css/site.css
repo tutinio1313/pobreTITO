@@ -96,3 +96,12 @@ hr {
   font-size: small;
   color: darkred;
 }
+
+#UserContainer
+{
+  width: max-content;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 2px 10px 20px #afb7b9;
+}
