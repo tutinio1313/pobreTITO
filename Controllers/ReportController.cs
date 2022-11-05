@@ -22,5 +22,7 @@ public class ReportController : Controller
 
     [HttpGet]
     public async Task<List<Report>> GetReports(User user) => ReportService.GetReports(user);
+    [HttpPost]
+    public async void Post(ReportViewModel model) => ReportService.PostReport(model);
 
 }

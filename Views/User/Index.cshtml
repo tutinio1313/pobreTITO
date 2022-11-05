@@ -2,14 +2,16 @@
     ViewData["Title"] = "Gestor de incidentes";
     Layout = "_LayoutUser";
 }
+
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Mvc.RazorPages
-@using System.Net.Http
-@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Mvc.RazorPages  
 @using System.Threading.Tasks
+@namespace pobreTITO_Views_User
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
+
 @attribute [Authorize]
 
 
@@ -22,28 +24,23 @@
     </div>
 
     <div class="container-fluid">
-        <div class="container" id="UserContainer">
-            <h4>Incidentes cargados</h4>
-            <hr>
+        <div class="container row">
+            <div class="container col" id="ReportsContainer">
+                <h4 class="text-center">Incidentes cargados</h4>
+                <hr>
 
-            @code {
-            private name = String.Empty;
+                <LoadedReports ObjectPropety ="@await userManager.GetUserAsync(User)" render-mode="WebAssemblyPrerendered"/>
+            </div>
 
-            protected override void OnInitialized()
-            {
-                base.OnInitialized();
-                name = (await userManager.GetUserAsync(User)).Name;
-            }
-        }
-
-
+            <div class="container col" id="ReportsContainer">
+                <h4 class="text-center">Agregar un incidente</h4>
+                <hr>
+                <button type="button" class="btn btn-primary position-relative">Agregar</button>
+            </div>
         </div>
     </div>
 
 }
-
-  
-
 else
 {
     <script defer>

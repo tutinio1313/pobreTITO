@@ -57,6 +57,7 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
@@ -65,6 +66,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "RegisterUser",
     pattern: "{controller=Home}/{action=Create}");
+
 
     
 

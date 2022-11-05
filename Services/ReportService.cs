@@ -11,7 +11,7 @@ namespace pobreTITO_Services
         private static PobretitoDbContext context;
         public static void SetContext(IApplicationBuilder app) { context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<PobretitoDbContext>(); }
         public static List<Report> GetReports(User user) => context.Reports.Where(x => x.User == user).ToList<Report>();    
-        public static async void PostReport(ReportViewModel model)
+        public static async Task PostReport(ReportViewModel model)
         {
             Report report = new();
             report.Address = model.Address;
