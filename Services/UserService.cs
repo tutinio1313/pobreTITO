@@ -16,9 +16,8 @@ namespace pobreTITO_Services
         {
             userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<User>>();
             signInManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SignInManager<User>>();
+            context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<PobretitoDbContext>();
         }
-
-        public static void SetContext(IApplicationBuilder app) { context = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<PobretitoDbContext>(); }
 
         public async static Task<Response> Register(RegisterViewModel register)
         {

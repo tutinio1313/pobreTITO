@@ -127,3 +127,26 @@ hr {
   left: 42%;
   margin-bottom: 10px ;
 }
+
+#ReportsContainer
+{
+  max-width: 600px;
+  position: relative;
+  left: 0%;
+}
+
+#AddRegister div
+{
+  display: flex;
+  flex-direction: column;
+}
+
+#AddRegister form button
+{
+  margin-top: 3%;
+}
+
+#loadedReports
+{
+  max-width: 600px
+}

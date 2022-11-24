@@ -3,8 +3,7 @@ namespace pobreTITO_Models
 {
     public class Report
     {
-        public string Id { get; set; } = String.Empty;
-        public User User { get; set; }
+        public int Id { get; set; }
         public string Address { get; set; } = String.Empty;
         public ReportType Type { get; set; }
         public string Comment { get; set; } = String.Empty;

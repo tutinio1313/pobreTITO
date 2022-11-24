@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<PobretitoDbContext>(options => options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+builder.Services.AddDbContext<PobretitoDbContext>(options => {options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]); options.EnableSensitiveDataLogging();});
 builder.Services.AddScoped<UserManager<User>>();
 builder.Services.AddScoped<SignInManager<User>>();
 
@@ -39,8 +39,6 @@ builder.Services.AddScoped(sp =>
 var app = builder.Build();
 
 UserService.SetManagers(app);
-UserService.SetContext(app);
-
 ReportService.SetContext(app);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -64,11 +62,13 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}");
 
 app.MapControllerRoute(
-    name: "RegisterUser",
-    pattern: "{controller=Home}/{action=Create}");
+    name: "User",
+    pattern: "{controller=User}/{action=index}");
 
-
-    
+app.MapControllerRoute(
+    name: "Report",
+    pattern: "{controller=Report}/{action=index}");
+  
 
 app.MapDefaultControllerRoute();
 app.MapBlazorHub();

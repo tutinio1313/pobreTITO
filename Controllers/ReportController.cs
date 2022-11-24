@@ -8,7 +8,6 @@ using pobreTITO_Services;
 #pragma warning disable 1998
 
 namespace pobreTITO.Controllers;
-[Authorize]
 public class ReportController : Controller
 {
 #pragma warning disable CS8618
@@ -21,8 +20,13 @@ public class ReportController : Controller
     }
 
     [HttpGet]
-    public async Task<List<Report>> GetReports(User user) => ReportService.GetReports(user);
+    [Route("/Get")]
+    public async Task<ReportGetResponse> GetReports(string userName) => ReportService.GetReports(userName);
     [HttpPost]
-    public async void Post(ReportViewModel model) => ReportService.PostReport(model);
+    public async Task<IActionResult> Post(ReportViewModel model)
+    {
+        await ReportService.PostReport(model);
+        return RedirectToAction("Index", "User");
+    }
 
 }

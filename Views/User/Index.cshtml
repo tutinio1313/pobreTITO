@@ -2,12 +2,15 @@
     ViewData["Title"] = "Gestor de incidentes";
     Layout = "_LayoutUser";
 }
-
+@model ReportViewModel
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Mvc.RazorPages  
-@using System.Threading.Tasks
+@using pobreTITO_Models
+@using Microsoft.JSInterop
 @namespace pobreTITO_Views_User
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using System.Net.Http
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
@@ -18,24 +21,84 @@
 @if (signInManager.IsSignedIn(User))
 {
 
-    <div class="container-fluid text-center text-primary" id="UserContainer" style="margin-bottom : 10px;">
-        <h2>¡Bienvenido @((await userManager.GetUserAsync(User)).Name) al gestor de incidentes!</h2>
+    <div class="container-fluid text-center text-primary mx-auto" id="UserContainer" style="margin-bottom : 10px;">
+        <h4>¡Bienvenido @((await userManager.GetUserAsync(User)).Name) al gestor de incidentes!</h4>
         <hr>
     </div>
 
     <div class="container-fluid">
         <div class="container row">
-            <div class="container col" id="ReportsContainer">
-                <h4 class="text-center">Incidentes cargados</h4>
-                <hr>
+            @*<div class="container">
+                <table id="loadedReports" class="table table-hover table-light table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Dirección</th>
+                            <th scope="col">Comentarios</th>
+                        </tr>
+                    </thead>
 
-                <LoadedReports ObjectPropety ="@await userManager.GetUserAsync(User)" render-mode="WebAssemblyPrerendered"/>
-            </div>
+                    <tbody class="">
+                        @{
+                            HttpClient client = new();
+                            User user = await userManager.GetUserAsync(User);
+                            ReportGetResponse response = await client.GetFromJsonAsync<ReportGetResponse>("https://localhost:1337/Report/Get?userName=" + user.UserName);
 
-            <div class="container col" id="ReportsContainer">
-                <h4 class="text-center">Agregar un incidente</h4>
+                            if(response.Reports.Count > 0)
+                            {
+                                foreach(Report report in response.Reports)
+                                {
+                                    @report.Id;
+                                    @report.Address;
+                                    @report.Comment;
+                                }
+                            }
+
+                            else
+                            {
+                                @HtmlEncoder.Encode("¡Oops parece que no hay reportes preexistentes!");
+                            }
+
+                            
+                        } 
+                    </tbody>
+                </table>
+            </div>*@
+
+            <div class="container mx-auto col" id="ReportsContainer">
+                <h5 class="text-center">Agregar un incidente</h5>
                 <hr>
-                <button type="button" class="btn btn-primary position-relative">Agregar</button>
+                <div class="conteiner" id="AddRegister">
+                    <form class="form text-center" asp-action="Post" asp-controller="Report" method="post">
+                        <div asp-validation-summary="All"></div>
+                        <input style="display: none;" asp-for="User" value="@((await userManager.GetUserAsync(User)).UserName)">
+                        <label asp-for="ReportType">Tipo de reporte</label>                        
+                        <select asp-for="ReportType" name="ReportType" class="form-control text-center">
+                            <option value="0">Alumbrado público</option>
+                            <option value="1">Bacheo</option>
+                            <option value="2">Ciclistas</option>
+                            <option value="3">Cloacas</option>
+                            <option value="4">Espacios verdes</option>
+                            <option value="5">Semaforos</option>
+                        </select>
+
+                        <div>
+                            <label asp-for="Address">Dirección</label>
+                            <input asp-for="Address" id="Address" class="text-center" type="text">
+                        </div>
+
+                        <div>
+                            <label asp-for="Comment">Comentarios</label>
+                            <input asp-for="Comment" id="Comment" class="text-center" type="text">
+                        </div>
+
+                        <input asp-for="ImageURL" style="display: none;" value="abcd">
+
+                        <button class="btn btn-primary" type="submit">Ingresar reclamo</button>
+                    </form>
+
+                </div>
+
             </div>
         </div>
     </div>
@@ -52,7 +115,7 @@ else
     <div style="padding: 10px; background-color: #FFFFFF; border: 10px solid #FFFFFF; border-radius: 10px;"
     class="text-center">
         <h2 class="card-title">Error 401 : No estas autorizado.</h2>
-        <h6>Para ver este apartado debes iniciar sesión</h6>
+        <th>Para ver este apartado debes iniciar sesión</th>
         <a class="btn btn-primary " data-toggle="pill" href="@Url.Action("Index", "Login")">Ingresar</a>
     </div>
 }

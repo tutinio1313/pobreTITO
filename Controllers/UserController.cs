@@ -64,7 +64,6 @@ public class UserController : Controller
         if (ModelState.IsValid)
         {
             Response response = await UserService.Login(request);
-
             if (response.StateExecution)
             {
                 return View("Index");

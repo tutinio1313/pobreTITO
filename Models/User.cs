@@ -11,5 +11,6 @@ namespace pobreTITO_Models
         public string Name { get; set; } = String.Empty;
         public string Lastname { get; set; } = String.Empty;
         public string DNI {get; set;} = String.Empty;
+        public List<Report> Reports = new();
     }
 }

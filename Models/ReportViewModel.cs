@@ -7,7 +7,7 @@ namespace pobreTITO_Models
     public class ReportViewModel
     {
         [Required(ErrorMessage = "Oops, parece que hubo un problema con la identificación del usuario.")]
-        public User User { get; set; }
+        public string User { get; set; }
 
         [Required(ErrorMessage = "Oops, debes ingresar la dirección.")]
         [DataType(DataType.Text)]
